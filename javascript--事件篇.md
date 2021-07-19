@@ -135,6 +135,17 @@ btn.onclick = function(){
 
 
 
+[题外] ：e.bubbles  可以查看元素是否冒泡 ，true ： 冒泡
+
+~~~javascript
+var btn = docuemnt.querySelector("button")
+btn.onclick = function(e){
+    console.log(e.bubbles) // 返回 boolean
+}
+~~~
+
+
+
 
 
 ## 2. 事件对象的通用成员
@@ -218,7 +229,67 @@ btn.onclick = function(e){
 
 
 
+
+
+
+
+
+
+
+
 # 鼠标事件
+
+## 1. 事件类型
+
+前缀 “on” 
+
+- `click` : 点击 、回车键触发
+- `dbclick`： 双击
+- `mousedown`：按下鼠标任意键时候触发
+- `mouseup`：鼠标抬起时候
+- `mousemove`：鼠标在元素上移动触发
+- `mouseover`: 鼠标进入元素时触发
+- `mouseout`: 鼠标离开元素时触发
+- `mouseenter`:   鼠标进入元素时触发 【该事件不会冒泡】
+- `mouseleave`:  鼠标离开元素时触发 【该事件不会冒泡】
+
+
+
+## 2. 事件对象
+
+- `altKey`: 触发事件时候，是否按下键盘的alt 键
+
+  ~~~javascript
+  var btn = docuemnt.querySelector("button")
+  btn.onclick = function(e){
+    console.log(e.altKey)   // 返回 boolean 
+  }
+  ~~~
+
+  
+
+- `ctrlKey`:触发事件时候，是否按下键盘的ctrlKey 键
+
+- `shiftKey`: 触发事件时，是否按下键盘的shift 键
+
+- `button`:   触发事件时，按下鼠标的类型 ； 返回数字
+
+  - 0：左键
+  - 1：中键
+  - 2：右键
+
+
+
+​		==**位置**==
+
+```tex
+	`page` : pageX,pageY 当前鼠标距离页面的横纵坐标  【相对于页面】
+    `client`: clientX 、clientY  【鼠标相对于视口】
+    `offset` :offsetX 、 offsetY 【相对于事件源的内边距的 坐标】
+    `screen` :screenX 、screenY  【相对于电脑屏幕】
+    `x/y` : 等同于 clientX 、clientY
+    `movement` :movementX 、 movementY 只在鼠标移动事件中有效【相对于上一次鼠标位置】
+```
 
 
 
@@ -230,7 +301,29 @@ btn.onclick = function(e){
 
 
 
+键盘事件 ，可以 阻止 默认事件，如果阻止 ，文本不会显示
 
+
+
+## 1. 事件类型
+
+前缀“on” 
+
+- `keydown`: 按下键盘上任意键触发 ，如果按住不放，会重复触发此事件
+- `keypress`: 按下键盘上一个**字符键**时触发
+
+- `keyup`: 抬起键盘上任意键触发
+
+
+
+
+
+## 2. 事件对象
+
+- `code`：得到按键字符串，适配键盘布局
+- `key`:得到按键字符串, 不适配键盘布局
+
+- `keyCode 、which`： 得到键盘编码
 
 
 
@@ -238,15 +331,118 @@ btn.onclick = function(e){
 
 # 表单事件
 
+## 1. 表单事件类型
 
 
 
+- `focus`: 元素聚焦时候触发【能与用户交互的元素，如 a标签 ，video，audio  ... 】
+- `blur`: 元素失去焦点时候触发
+- `submit`:提交表单时触发,仅在 from 表单中触发 【默认】
 
-# 页面状态事件
+- `change`:表单内容改变时候触发
+- `input`:  文本改变事件，即使触发   【无法阻止的】 
+
+
 
 
 
 # 其他事件
+
+## １.页面状态事件
+
+> 页面渲染过程
+>
+> 1. 得到页面源代码
+> 2. 创建document节点
+> 3. 从上到下，讲元素依次添加到dom书中，每添加一个元素，进行于预渲染
+> 4. 按照结构，依次渲染子节点
+>
+> 【结论】：
+>
+> -  css应该写到页面**顶部**，避免出现闪烁（如果放到页面底部，会导致元素没有样式，使用html5的默认样式，然后当读到css文件后，重新改变样式）
+> - JS 应该写到页面**底部**, 避免后续渲染的阻塞，也避免运行ＪＳ得不到页面中的元素
+
+
+
+
+
+前缀“on” 
+
+**window**的 
+
+- `load、DOMContentLoaded、readystatechange`
+
+  - load: 页面中所有资源全部加载完毕的事件　
+   ~~~javascript
+    	window的事件  window.onload= function(){ 
+       
+       } 
+   ~~~
+  - DOMContentLoaded：dom 树构建完成之后触发 【 document 的事件 (ready事件)】
+
+    ~~~javascript
+    doucument.addEventListener("DOMContentLoaded",function(){
+        
+    })
+    ~~~
+    
+  - readystatechange：页面正在加载中 ，他会触发DOMContentLoaded事件
+
+     
+
+- `unload、beforeunload`
+
+  - beforeunload、unload : 关闭窗口时运行， 可以运行阻止关闭窗口 （目前还是 不会触发了）
+
+- `scroll`：窗口发生滚动时候触发， 【window事件、元素事件】
+
+  - 可以根据scrollTop 和 scrollLeft  获取和设置滚动距离
+
+    <img src="D:\C盘移动过来的文件\Desktop\133.png" alt="133" style="zoom: 50%;" />
+
+  ~~~javascript
+  document.querySelector("div").onscroll = function (){
+      conslole.log(this.scrollTop,this.scrollLeftthis.scrollTop = 0 ; this.scrollLeft = 0 )
+      this.scrollTop = 0 ; this.scrollLeft = 0 // 回到顶部
+  }
+  ~~~
+
+  **获取整个网页滚动高度**
+
+  ~~~javascript
+  window.onscroll = function(){
+      conslole.log( document.documentElement.scrollTop + document.body.scrollTop  )
+  }
+  ~~~
+
+  
+
+- `resize` : 窗口尺寸发生改变 ，监听的是视口区域【window事件】
+
+  **窗口尺寸** 如图
+
+  <img src="D:\C盘移动过来的文件\Desktop\0.png" alt="0" style="zoom: 50%;" />
+
+  ~~~javascript
+  window.resize = function (){
+      
+  } 
+  ~~~
+
+  
+
+- `contextmenu`
+
+
+
+- `paste`
+- `copy`
+
+  
+
+
+
+
 
 
 
