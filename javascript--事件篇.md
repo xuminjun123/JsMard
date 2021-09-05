@@ -398,7 +398,7 @@ btn.onclick = function(e){
 
   - 可以根据scrollTop 和 scrollLeft  获取和设置滚动距离
 
-    <img src="D:\C盘移动过来的文件\Desktop\133.png" alt="133" style="zoom: 50%;" />
+    <img src="D:\typora\JSmark\JSImage\133.png" alt="133" style="zoom: 50%;" />
 
   ~~~javascript
   document.querySelector("div").onscroll = function (){
@@ -419,28 +419,70 @@ btn.onclick = function(e){
 
 - `resize` : 窗口尺寸发生改变 ，监听的是视口区域【window事件】
 
-  **窗口尺寸** 如图
+  **窗口窗口尺寸** 如图
 
-  <img src="D:\C盘移动过来的文件\Desktop\0.png" alt="0" style="zoom: 50%;" />
+  <img src="D:\typora\JSmark\JSImage\0.png" alt="0" style="zoom:50%;" />
 
   ~~~javascript
   window.resize = function (){
-      
+      // window.innerWidth 、windowinnerHerght: 包含滚动条
+      // document.documentElement.clientWidth 、clientHight: 不包含滚动条
   } 
   ~~~
 
   
 
-- `contextmenu`
+**元素尺寸**： 如图
+
+<img src="D:\typora\JSmark\JSImage\11.jpg" alt="11" style="zoom:50%;" />
 
 
 
-- `paste`
-- `copy`
+- `contextmenu`： 右键点击事件
 
-  
+- `paste`：复制事件
+- `copy`：粘贴事件
 
 
+
+
+
+
+
+# 补充
+
+ **这些几乎用不到**
+
+## 1.元素位置
+
+- `offsetParent`:获取某个元素第一个定位的 **元素**，没有得到body
+- `offsetLeft、offsetTop`
+- `getBundingClientRect` 
+
+
+
+## 2. 事件模拟
+
+
+
+- `click`
+- `submit`
+- `dispatchEvent`
+
+
+
+## 3. 其他补充
+
+- `window.scrollX、window.pageXOffset、window.scrollY、window.pageYOffset`
+  - window.scrollX、window.pageXOffset ： 相当于根元素的 scrollLeft
+  - window.scrollY、window.pageYOffset  ： 相当于根元素的 scrollTop
+
+- `scrollTo、scrollBy`: 
+  - scrollTo（x,y） ： 设置滚动条位置
+  - scrollBy (x,y)：设置滚动条位置(参数可以为负数)
+- `resiezeTo、resizeBy`：
+  - resiezeTo ：这是直接在窗口尺寸设置 一个值
+  - resizeBy ： 这是在  之前的窗口上增加、减少一个值
 
 
 
